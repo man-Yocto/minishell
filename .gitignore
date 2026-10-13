@@ -1,0 +1,14 @@
+# Build artifacts
+*.o
+*.a
+*.d
+*.dSYM/
+a.out
+obj/
+minishell
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store

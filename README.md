@@ -1,5 +1,7 @@
 # Minishell - 42 School Project
 
+[![CI](https://github.com/man-Yocto/minishell/actions/workflows/ci.yml/badge.svg)](https://github.com/man-Yocto/minishell/actions/workflows/ci.yml)
+
 A simple shell implementation in C that replicates core UNIX shell functionality. Built as part of the 42 school curriculum with a focus on systems programming concepts.
 
 ## Features
@@ -75,6 +77,25 @@ minishell/
 | `unset [VAR]` | Remove environment variable |
 | `env` | Display environment |
 | `exit [code]` | Exit shell |
+
+## Key technical challenges
+
+- **Tokenizing like Bash** — splitting input into words and operators while respecting single and
+  double quotes, where `'` disables expansion entirely and `"` still expands `$VAR`.
+- **Variable expansion** — `$VAR`, `$?` and `$$`, applied after quote analysis but before word
+  splitting, without breaking quoted strings.
+- **Pipelines and redirections** — forking one process per command, wiring pipes and file
+  descriptors with `dup2`, and closing every unused end so pipelines terminate.
+- **Heredocs** — reading input until the delimiter before the pipeline starts, with expansion and
+  correct `Ctrl-C` behaviour.
+- **Signals** — different `SIGINT` / `SIGQUIT` handling at the prompt, during heredoc input, and in
+  child processes, using `sigaction` and readline's `rl_on_new_line` / `rl_replace_line`.
+- **Memory management** — freeing every token, command and environment copy on every path in a
+  long-running interactive program.
+
+## What I learned
+
+<!-- TODO: write this section yourself -->
 
 ## Limitations
 
